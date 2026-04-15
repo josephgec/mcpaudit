@@ -158,6 +158,13 @@ cloud:
 Local storage remains the source of truth; forwarding failures drop batches
 rather than blocking the local write path.
 
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md). Notable: **0.1.2** adds embedded-JSON
+parsing and secret-token detection (Bearer, JWT, GitHub PAT, AWS, OpenAI,
+Anthropic, Slack, kv-style password/api_key) so secrets inside tool text
+responses are redacted, not just object keys at the top level.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
