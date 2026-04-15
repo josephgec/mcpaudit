@@ -1,5 +1,5 @@
 {
-  "name": "mcpaudit",
+  "name": "@josephgec/mcpaudit",
   "version": "0.1.0",
   "description": "A transparent MCP proxy that logs and audits every tool invocation.",
   "license": "MIT",

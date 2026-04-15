@@ -44,8 +44,10 @@ tamper-evident record of what your agents actually did.
 ## Install
 
 ```bash
-npm install -g mcpaudit
+npm install -g @josephgec/mcpaudit
 ```
+
+The CLI binary is still named `mcpaudit`.
 
 ## Quickstart
 
