@@ -41,7 +41,7 @@ export async function runStdioProxy(
     opts.identity,
   );
 
-  wireHandlers(server, upstreamClient, session);
+  wireHandlers(server, upstreamClient, session, caps);
 
   const transport = new StdioServerTransport();
   await server.connect(transport);

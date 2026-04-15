@@ -68,7 +68,7 @@ export async function runSseProxy(
           const val = req.headers[h.toLowerCase()];
           if (typeof val === "string") session.userIdentity = val;
         }
-        wireHandlers(server, upstream, session);
+        wireHandlers(server, upstream, session, caps);
 
         const transport = new SSEServerTransport("/message", res);
         sessions.set(transport.sessionId, { transport, server, upstream });
