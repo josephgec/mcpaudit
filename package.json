@@ -1,0 +1,57 @@
+{
+  "name": "mcpaudit",
+  "version": "0.1.0",
+  "description": "A transparent MCP proxy that logs and audits every tool invocation.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mcpaudit": "./dist/cli/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "mcpaudit.config.example.yaml",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x dist/cli/index.js || true",
+    "build:ui": "vite build --config src/dashboard/ui/vite.config.ts",
+    "dev": "tsc --watch",
+    "start": "node dist/cli/index.js start",
+    "test": "node --test --import tsx test/**/*.test.ts",
+    "lint": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "better-sqlite3": "^11.3.0",
+    "bcrypt": "^5.1.1",
+    "commander": "^12.1.0",
+    "js-yaml": "^4.1.0",
+    "pg": "^8.13.0",
+    "ulid": "^2.3.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/bcrypt": "^5.0.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.7.0",
+    "@types/pg": "^8.11.10",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "audit",
+    "proxy",
+    "observability",
+    "compliance",
+    "logging"
+  ]
+}

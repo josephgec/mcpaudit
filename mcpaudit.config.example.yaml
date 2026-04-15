@@ -1,0 +1,91 @@
+# mcpaudit configuration example.
+# Copy to mcpaudit.config.yaml and edit.
+
+proxy:
+  # stdio = forward MCP over stdin/stdout (for local AI host integration)
+  # sse   = listen as an HTTP+SSE MCP server for remote clients
+  transport: stdio
+  listen:
+    host: 127.0.0.1
+    port: 3100
+
+# Single upstream (Phase 1). For multiple upstreams see `upstreams:` below.
+upstream:
+  name: filesystem
+  # stdio upstream:
+  command: npx
+  args: ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]
+  env: {}
+  # OR remote SSE upstream:
+  # url: https://mcp.example.com/sse
+  # headers:
+  #   Authorization: Bearer ...
+
+# Multi-server multiplexer (Phase 3.2). If present, `upstream` is ignored.
+# upstreams:
+#   - name: filesystem
+#     command: npx
+#     args: ["-y", "@modelcontextprotocol/server-filesystem", "/data"]
+#   - name: database
+#     url: https://db-mcp.internal/sse
+
+logging:
+  storage: sqlite         # sqlite | postgres
+  path: ./audit-logs
+  rotation: daily         # daily | size
+  rotation_size_mb: 100
+  retention_days: 90
+  # Postgres only:
+  # postgres:
+  #   connectionString: postgres://user:pass@host:5432/mcpaudit
+
+sanitization:
+  redact_fields:
+    - password
+    - secret
+    - token
+    - api[_-]?key
+    - ssn
+    - credit[_-]?card
+  max_field_size_kb: 50
+  # PII detection (Phase 2.3):
+  pii:
+    enabled: true
+    mode: redact           # redact | hash | allow
+    detectors:
+      - email
+      - phone
+      - ssn
+      - credit_card
+
+identity:
+  source: config           # config | header | oauth
+  default_user: dev-local
+  header_name: x-user-id   # when source=header
+
+alerts:
+  - name: high_error_rate
+    condition: "error_rate > 0.1 over 5m"
+    action: webhook
+    url: "https://hooks.example.com/alert"
+  - name: slow_tool
+    condition: "p95_latency > 5000"
+    action: log
+
+dashboard:
+  enabled: true
+  host: 127.0.0.1
+  port: 3101
+  # RBAC (Phase 3.4). When `auth.enabled=false`, dashboard is open on localhost.
+  auth:
+    enabled: false
+    users:
+      - username: admin
+        role: admin
+        # bcrypt hash — create with: mcpaudit hash-password <password>
+        password_hash: ""
+
+cloud:
+  enabled: false
+  ingest_url: https://ingest.mcpaudit.dev/v1/logs
+  api_key: ""
