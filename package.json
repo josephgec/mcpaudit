@@ -1,11 +1,11 @@
 {
   "name": "@josephgec/mcpaudit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A transparent MCP proxy that logs and audits every tool invocation.",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "mcpaudit": "./dist/cli/index.js"
+    "mcpaudit": "dist/cli/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
