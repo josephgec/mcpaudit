@@ -34,6 +34,18 @@ export interface SanitizationConfig {
     mode: "redact" | "hash" | "allow";
     detectors?: Array<"email" | "phone" | "ssn" | "credit_card" | "ip">;
   };
+  secrets?: {
+    enabled?: boolean;
+    mode?: "redact" | "hash" | "allow";
+    detectors?: string[];
+  };
+  /**
+   * When a string field looks like JSON, parse and recursively sanitize it
+   * before writing the audit log. Defaults to true. Catches the case where
+   * a tool returns a file's text content that contains a JSON object with
+   * secret keys.
+   */
+  parse_embedded_json?: boolean;
 }
 
 export interface LoggingConfig {
